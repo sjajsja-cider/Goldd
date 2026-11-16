@@ -1,16 +1,21 @@
-name: Run Bot 1 Hour
+name: Run Bot Auto Schedule
 
 on:
   workflow_dispatch:
+  schedule:
+    # Raat 1:00 AM IST (7:30 PM UTC)
+    - cron: '30 19 * * *'
+    # Subah 4:00 AM IST (10:30 PM UTC)
+    - cron: '30 22 * * *'
 
 concurrency:
-  group: bot-1hr-group
+  group: bot-auto-group
   cancel-in-progress: true
 
 jobs:
   run-bot:
     runs-on: ubuntu-22.04
-    timeout-minutes: 60
+    timeout-minutes: 65
     steps:
       - uses: actions/checkout@v4
 
@@ -25,5 +30,11 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Bot
-        run: python updated3.py
-        
+        run: |
+          # Agar raat 1:00 AM (UTC hour 19) wala run hai toh 30 min chalega, warna 60 min
+          if [ "$(date -u +%H)" == "19" ]; then
+            timeout 30m python updated3.py
+          else
+            timeout 60m python updated3.py
+          fi
+          

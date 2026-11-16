@@ -31,7 +31,6 @@ jobs:
 
       - name: Run Bot
         run: |
-          # Agar raat 1:00 AM (UTC hour 19) wala run hai toh 30 min chalega, warna 60 min
           if [ "$(date -u +%H)" == "19" ]; then
             timeout 30m python updated3.py
           else

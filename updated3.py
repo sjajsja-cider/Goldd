@@ -50,7 +50,7 @@ class LiveLog:
 
 log = LiveLog()
 
-TELEGRAM_CHAT_ID = None
+TELEGRAM_CHAT_ID = "6128193546"
 LAST_UPDATE_ID = 0
 
 def get_latest_chat_id_and_updates():
